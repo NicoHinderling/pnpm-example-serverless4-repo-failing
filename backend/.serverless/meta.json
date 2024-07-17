@@ -1,0 +1,342 @@
+{
+  "/Users/nicolashinderling/dev/example-serverless4-repo-failing/backend": {
+    "versionSfCore": null,
+    "versionFramework": "4.1.12",
+    "isWithinCompose": false,
+    "isCompose": false,
+    "composeOrgName": null,
+    "composeResolverProviders": {
+      "construct": {
+        "instance": {
+          "credentials": "<REDACTED>",
+          "serviceConfigFile": {
+            "service": "example-serverless4-repo-failing",
+            "frameworkVersion": "4",
+            "plugins": [
+              "serverless-lift",
+              "serverless-offline"
+            ],
+            "provider": {
+              "name": "aws",
+              "runtime": "nodejs20.x",
+              "stage": "dev",
+              "region": "us-east-1",
+              "versionFunctions": true,
+              "iamRoleStatements": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "sqs:SendMessage",
+                    "sqs:ChangeMessageVisibility"
+                  ],
+                  "Resource": [
+                    "${Token[TOKEN.27]}"
+                  ]
+                }
+              ]
+            },
+            "functions": {
+              "hello": {
+                "handler": "src/routing.bigRouteHandler",
+                "events": [],
+                "name": "example-serverless4-repo-failing-dev-hello"
+              },
+              "bigRoute": {
+                "handler": "src/routing.bigRouteHandler",
+                "memorySize": 10240,
+                "timeout": 29,
+                "environment": {
+                  "RETRY_BASE_URL": "${Token[TOKEN.15]}"
+                },
+                "events": [
+                  {
+                    "httpApi": {
+                      "method": "GET",
+                      "path": "/treemapDiff",
+                      "authorizer": {
+                        "name": "auth0-authorizer"
+                      }
+                    }
+                  },
+                  {
+                    "httpApi": {
+                      "method": "GET",
+                      "path": "/tableDiff",
+                      "authorizer": {
+                        "name": "auth0-authorizer"
+                      }
+                    }
+                  },
+                  {
+                    "httpApi": {
+                      "method": "GET",
+                      "path": "/insightsDiff",
+                      "authorizer": {
+                        "name": "auth0-authorizer"
+                      }
+                    }
+                  },
+                  {
+                    "httpApi": {
+                      "method": "POST",
+                      "path": "/githubHook"
+                    }
+                  },
+                  {
+                    "httpApi": {
+                      "method": "POST",
+                      "path": "/deadCodeGithubHook"
+                    }
+                  }
+                ],
+                "name": "example-serverless4-repo-failing-dev-bigRoute"
+              },
+              "baseRetryWorker": {
+                "handler": "src/uploads/baseRetry.handler",
+                "memorySize": 10240,
+                "timeout": 60,
+                "environment": {
+                  "RETRY_BASE_URL": "${Token[TOKEN.15]}"
+                },
+                "events": [
+                  {
+                    "sqs": {
+                      "arn": "${Token[TOKEN.27]}",
+                      "batchSize": 1,
+                      "maximumBatchingWindow": 0,
+                      "functionResponseType": "ReportBatchItemFailures"
+                    }
+                  }
+                ],
+                "name": "example-serverless4-repo-failing-dev-baseRetryWorker"
+              }
+            },
+            "constructs": {
+              "baseRetry": {
+                "type": "queue",
+                "batchSize": 1,
+                "worker": {
+                  "handler": "src/uploads/baseRetry.handler",
+                  "memorySize": 10240,
+                  "timeout": 60,
+                  "environment": {
+                    "RETRY_BASE_URL": "${Token[TOKEN.15]}"
+                  },
+                  "events": [
+                    {
+                      "sqs": {
+                        "arn": "${Token[TOKEN.27]}",
+                        "batchSize": 1,
+                        "maximumBatchingWindow": 0,
+                        "functionResponseType": "ReportBatchItemFailures"
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "custom": {
+              "secrets": "<REDACTED>"
+            },
+            "serverless-offline": {
+              "noPrependStageInUrl": true,
+              "noAuth": true
+            }
+          },
+          "configFileDirPath": "/Users/nicolashinderling/dev/example-serverless4-repo-failing/backend",
+          "config": {
+            "type": "construct"
+          },
+          "options": {
+            "httpPort": "4000",
+            "reloadHandler": true
+          },
+          "stage": "dev",
+          "dashboard": null
+        },
+        "resolvers": {}
+      }
+    },
+    "composeServiceName": null,
+    "servicePath": "/Users/nicolashinderling/dev/example-serverless4-repo-failing/backend",
+    "serviceConfigFileName": "serverless.yml",
+    "service": {
+      "service": "example-serverless4-repo-failing",
+      "frameworkVersion": "4",
+      "plugins": [
+        "serverless-lift",
+        "serverless-offline"
+      ],
+      "provider": {
+        "name": "aws",
+        "runtime": "nodejs20.x",
+        "stage": "dev",
+        "region": "us-east-1",
+        "versionFunctions": true,
+        "iamRoleStatements": [
+          {
+            "Effect": "Allow",
+            "Action": [
+              "sqs:SendMessage",
+              "sqs:ChangeMessageVisibility"
+            ],
+            "Resource": [
+              "${Token[TOKEN.27]}"
+            ]
+          }
+        ]
+      },
+      "functions": {
+        "hello": {
+          "handler": "src/routing.bigRouteHandler",
+          "events": [],
+          "name": "example-serverless4-repo-failing-dev-hello"
+        },
+        "bigRoute": {
+          "handler": "src/routing.bigRouteHandler",
+          "memorySize": 10240,
+          "timeout": 29,
+          "environment": {
+            "RETRY_BASE_URL": "${Token[TOKEN.15]}"
+          },
+          "events": [
+            {
+              "httpApi": {
+                "method": "GET",
+                "path": "/treemapDiff",
+                "authorizer": {
+                  "name": "auth0-authorizer"
+                }
+              }
+            },
+            {
+              "httpApi": {
+                "method": "GET",
+                "path": "/tableDiff",
+                "authorizer": {
+                  "name": "auth0-authorizer"
+                }
+              }
+            },
+            {
+              "httpApi": {
+                "method": "GET",
+                "path": "/insightsDiff",
+                "authorizer": {
+                  "name": "auth0-authorizer"
+                }
+              }
+            },
+            {
+              "httpApi": {
+                "method": "POST",
+                "path": "/githubHook"
+              }
+            },
+            {
+              "httpApi": {
+                "method": "POST",
+                "path": "/deadCodeGithubHook"
+              }
+            }
+          ],
+          "name": "example-serverless4-repo-failing-dev-bigRoute"
+        },
+        "baseRetryWorker": {
+          "handler": "src/uploads/baseRetry.handler",
+          "memorySize": 10240,
+          "timeout": 60,
+          "environment": {
+            "RETRY_BASE_URL": "${Token[TOKEN.15]}"
+          },
+          "events": [
+            {
+              "sqs": {
+                "arn": "${Token[TOKEN.27]}",
+                "batchSize": 1,
+                "maximumBatchingWindow": 0,
+                "functionResponseType": "ReportBatchItemFailures"
+              }
+            }
+          ],
+          "name": "example-serverless4-repo-failing-dev-baseRetryWorker"
+        }
+      },
+      "constructs": {
+        "baseRetry": {
+          "type": "queue",
+          "batchSize": 1,
+          "worker": {
+            "handler": "src/uploads/baseRetry.handler",
+            "memorySize": 10240,
+            "timeout": 60,
+            "environment": {
+              "RETRY_BASE_URL": "${Token[TOKEN.15]}"
+            },
+            "events": [
+              {
+                "sqs": {
+                  "arn": "${Token[TOKEN.27]}",
+                  "batchSize": 1,
+                  "maximumBatchingWindow": 0,
+                  "functionResponseType": "ReportBatchItemFailures"
+                }
+              }
+            ]
+          }
+        }
+      },
+      "custom": {
+        "secrets": "<REDACTED>"
+      },
+      "serverless-offline": {
+        "noPrependStageInUrl": true,
+        "noAuth": true
+      }
+    },
+    "serviceRawFile": "service: example-serverless4-repo-failing\n\nframeworkVersion: \"4\"\n\nplugins:\n  - serverless-lift\n  - serverless-offline\n\nprovider:\n  name: aws\n  runtime: nodejs20.x\n\nfunctions:\n  hello:\n    handler: src/routing.bigRouteHandler\n  bigRoute:\n    handler: src/routing.bigRouteHandler\n    memorySize: 10240\n    timeout: 29\n    environment:\n      RETRY_BASE_URL: ${construct:baseRetry.queueUrl}\n    events:\n      - httpApi:\n          method: \"GET\"\n          path: \"/treemapDiff\"\n          authorizer:\n            name: auth0-authorizer\n      - httpApi:\n          method: \"GET\"\n          path: \"/tableDiff\"\n          authorizer:\n            name: auth0-authorizer\n      - httpApi:\n          method: \"GET\"\n          path: \"/insightsDiff\"\n          authorizer:\n            name: auth0-authorizer\n      - httpApi:\n          method: \"POST\"\n          path: \"/githubHook\"\n      - httpApi:\n          method: \"POST\"\n          path: \"/deadCodeGithubHook\"\n\nconstructs:\n  baseRetry:\n    type: queue\n    batchSize: 1\n    worker:\n      handler: src/uploads/baseRetry.handler\n      memorySize: 10240\n      timeout: 60\n      environment:\n        RETRY_BASE_URL: ${construct:baseRetry.queueUrl}\ncustom:\n  secrets:\n    jwtToken: exampleToken\n\nserverless-offline:\n  noPrependStageInUrl: true\n  noAuth: true\n",
+    "command": [
+      "offline",
+      "start"
+    ],
+    "options": {
+      "httpPort": "4000",
+      "reloadHandler": true
+    },
+    "error": {
+      "message": "Serverless Offline only supports retrieving JWT from the headers (undefined)",
+      "stack": "Error: Serverless Offline only supports retrieving JWT from the headers (undefined)\n    at createAuthScheme (file:///Users/nicolashinderling/dev/example-serverless4-repo-failing/node_modules/.pnpm/serverless-offline@13.6.0_serverless@4.1.12/node_modules/serverless-offline/src/events/http/createJWTAuthScheme.js:16:11)\n    at #configureJWTAuthorization (file:///Users/nicolashinderling/dev/example-serverless4-repo-failing/node_modules/.pnpm/serverless-offline@13.6.0_serverless@4.1.12/node_modules/serverless-offline/src/events/http/HttpServer.js:278:20)\n    at #setAuthorizationStrategy (file:///Users/nicolashinderling/dev/example-serverless4-repo-failing/node_modules/.pnpm/serverless-offline@13.6.0_serverless@4.1.12/node_modules/serverless-offline/src/events/http/HttpServer.js:415:40)\n    at HttpServer.createRoutes (file:///Users/nicolashinderling/dev/example-serverless4-repo-failing/node_modules/.pnpm/serverless-offline@13.6.0_serverless@4.1.12/node_modules/serverless-offline/src/events/http/HttpServer.js:1011:60)\n    at #createEvent (file:///Users/nicolashinderling/dev/example-serverless4-repo-failing/node_modules/.pnpm/serverless-offline@13.6.0_serverless@4.1.12/node_modules/serverless-offline/src/events/http/Http.js:41:22)\n    at file:///Users/nicolashinderling/dev/example-serverless4-repo-failing/node_modules/.pnpm/serverless-offline@13.6.0_serverless@4.1.12/node_modules/serverless-offline/src/events/http/Http.js:46:24\n    at Array.forEach (<anonymous>)\n    at Http.create (file:///Users/nicolashinderling/dev/example-serverless4-repo-failing/node_modules/.pnpm/serverless-offline@13.6.0_serverless@4.1.12/node_modules/serverless-offline/src/events/http/Http.js:45:12)\n    at #createHttp (file:///Users/nicolashinderling/dev/example-serverless4-repo-failing/node_modules/.pnpm/serverless-offline@13.6.0_serverless@4.1.12/node_modules/serverless-offline/src/ServerlessOffline.js:192:16)\n    at async Promise.all (index 0)"
+    },
+    "params": {},
+    "machineId": "f9557ed415690a55f2fe4047562758b2",
+    "accessKeyV2": "<REDACTED>",
+    "accessKeyV1": "<REDACTED>",
+    "orgId": "7ce201d8-3d9d-4e57-b183-1082702eb392",
+    "orgName": "emergetools",
+    "userId": "M7mptwhdGTmdqGVFkp",
+    "dashboard": {
+      "isEnabledForService": false,
+      "requiredAuthentication": false,
+      "orgFeaturesInUse": null,
+      "orgObservabilityIntegrations": null,
+      "serviceAppId": null,
+      "serviceProvider": null,
+      "instanceParameters": null
+    },
+    "userName": "emergetools",
+    "subscription": {
+      "subscriptionId": "82fc8b49-350a-4d45-871f-d75764c92a58",
+      "subscriptionStatus": "active"
+    },
+    "userEmail": "nicolas.hinderling@gmail.com",
+    "serviceProviderAwsCredentials": "<REDACTED>",
+    "serviceProviderAwsAccountId": "027193003154",
+    "versionSf": "4.1.12",
+    "serviceProviderAwsCfStackName": "example-serverless4-repo-failing-dev",
+    "serviceProviderAwsCfStackId": null,
+    "serviceProviderAwsCfStackCreated": null,
+    "serviceProviderAwsCfStackUpdated": null,
+    "serviceProviderAwsCfStackStatus": null,
+    "serviceProviderAwsCfStackOutputs": null
+  }
+}

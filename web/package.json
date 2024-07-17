@@ -1,0 +1,21 @@
+{
+  "name": "emerge-next-web",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": "^20"
+  },
+  "homepage": "..",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "^14.2.4",
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "next-unused": "0.0.6"
+  }
+}
